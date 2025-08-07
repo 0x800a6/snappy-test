@@ -11,8 +11,6 @@ arch="x86_64 aarch64"
 depends=("libavcodec>=58.134.100" "libavformat>=58.76.100")
 source_linux="https://get.videolan.org/vlc/$pkgver/vlc-$pkgver.tar.xz"
 source_windows="https://get.videolan.org/vlc/$pkgver/win64/vlc-$pkgver.zip"
-sha256_linux="1e1eaf6d8a5d01d9b70906cbab768c13213e63ed05a7969386680a7cba1cc403"
-sha256_windows="abc123...change_this"
 
 prepare() {
     echo "Preparing $pkgname..."
@@ -27,6 +25,23 @@ build() {
 
 package() {
     echo "Packaging $pkgname..."
+    mkdir -p "$pkgdir/bin"
+    cp -r bin/* "$pkgdir/bin/"
+}
+
+prepare_windows() {
+    echo "Preparing $pkgname for Windows..."
+    # Extract or patch for Windows
+}
+
+build_windows() {
+    echo "Building $pkgname for Windows..."
+    ./configure --host=x86_64-w64-mingw32
+    make
+}
+
+package_windows() {
+    echo "Packaging $pkgname for Windows..."
     mkdir -p "$pkgdir/bin"
     cp -r bin/* "$pkgdir/bin/"
 }
