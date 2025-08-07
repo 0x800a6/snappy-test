@@ -1,0 +1,36 @@
+name: vlc
+version: 3.0.20
+description: >
+  VLC media player is a free and open-source, cross-platform media player and streaming media server
+  that plays most multimedia files, as well as DVDs, audio CDs, VCDs, and various streaming protocols.
+homepage: https://www.videolan.org/vlc/
+license: GPL-2.0-or-later
+maintainers:
+  - name: VideoLAN
+    email: info@videolan.org
+dependencies:
+  - name: libavcodec
+    version: 58.134.100
+    type: ">="
+  - name: libavformat
+    version: 58.76.100
+    type: ">="
+windows_dependencies:
+  - name: directx
+    version: 12
+    type: ">="
+fetch:
+  url: https://get.videolan.org/vlc/$version/vlc-$version.tar.xz
+  windows_url: https://get.videolan.org/vlc/$version/win64/vlc-$version.zip
+  extract: true
+  windows_extract: true
+install:
+  script: install.sh
+  windows_script: install.ps1
+supported_architectures:
+  - x86_64
+  - aarch64
+supported_platforms:
+  - linux
+  - windows
+  - macos
