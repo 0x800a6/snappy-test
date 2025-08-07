@@ -1,0 +1,75 @@
+# SnappyBuild for hello-world test package
+
+pkgname=hello-world
+pkgver=1.0.0
+pkgdesc="A simple hello world test package"
+url="https://example.com"
+license="MIT"
+arch="x86_64"
+
+# Simple source - just create a basic script
+source=""
+source_linux=""
+source_windows=""
+
+prepare() {
+    echo "Preparing hello-world package..."
+    mkdir -p src
+    cat > src/hello.sh << 'EOF'
+#!/bin/bash
+echo "Hello from Snappy Package Manager!"
+echo "Package: $pkgname"
+echo "Version: $pkgver"
+EOF
+    chmod +x src/hello.sh
+}
+
+build() {
+    echo "Building hello-world package..."
+    # Nothing to build for this simple package
+}
+
+package() {
+    echo "Packaging hello-world package..."
+    mkdir -p "$pkgdir/bin"
+    cp src/hello.sh "$pkgdir/bin/hello-world"
+    
+    # Create a simple README
+    cat > "$pkgdir/README.md" << EOF
+# Hello World Package
+
+This is a test package for the Snappy Package Manager.
+
+## Usage
+
+Run: ./bin/hello-world
+
+## Package Information
+
+- Name: $pkgname  
+- Version: $pkgver
+- Description: $pkgdesc
+EOF
+}
+
+prepare_windows() {
+    echo "Preparing hello-world package for Windows..."
+    mkdir -p src
+    cat > src/hello.bat << 'EOF'
+@echo off
+echo Hello from Snappy Package Manager!
+echo Package: %pkgname%
+echo Version: %pkgver%
+EOF
+}
+
+build_windows() {
+    echo "Building hello-world package for Windows..."
+    # Nothing to build for this simple package
+}
+
+package_windows() {
+    echo "Packaging hello-world package for Windows..."
+    mkdir -p "%pkgdir%/bin"
+    copy src\\hello.bat "%pkgdir%\\bin\\hello-world.bat"
+}
